@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALL PAYMENT ANGTUNE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:url('https://cdn.phototourl.com/free/2026-04-17-5df70949-a7b3-4afd-a294-a1d72fe226eb.jpg') no-repeat center/cover;
+  overflow:hidden;
+}
+
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+}
+
+/* sparkle */
+.sparkle{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:#ffd700;
+  border-radius:50%;
+  animation:spark 4s linear infinite;
+  opacity:0.8;
+}
+
+@keyframes spark{
+  0%{transform:translateY(0) scale(0);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-250px) scale(1.5);opacity:0;}
+}
+
+.container{
+  position:relative;
+  width:340px;
+  padding:25px;
+  border-radius:22px;
+  z-index:2;
+  text-align:center;
+  backdrop-filter:blur(10px);
+}
+
+/* logo */
+.logo{
+  font-size:26px;
+  font-weight:700;
+  background:linear-gradient(90deg,#ffd700,#fff,#ffd700);
+  background-size:200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shineText 4s linear infinite, floatLogo 4s ease-in-out infinite;
+  text-shadow:0 0 25px rgba(255,215,0,0.7);
+}
+
+@keyframes shineText{
+  0%{background-position:0%;}
+  100%{background-position:200%;}
+}
+
+@keyframes floatLogo{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+}
+
+.tagline{
+  font-size:12px;
+  color:#ccc;
+  margin-bottom:18px;
+}
+
+/* card */
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid rgba(255,215,0,0.3);
+  transition:0.3s;
+  backdrop-filter:blur(6px);
+}
+
+.card:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 10px 35px rgba(0,0,0,0.7),
+             0 0 25px rgba(255,215,0,0.5);
+}
+
+.method{
+  font-weight:600;
+  color:#fff;
+}
+
+.number{
+  font-size:14px;
+  margin-top:4px;
+  color:#eee;
+}
+
+/* button */
+.copy{
+  margin-top:8px;
+  padding:6px 12px;
+  border:none;
+  border-radius:8px;
+  background:#ffd700;
+  color:black;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.copy:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 10px rgba(255,215,0,0.7);
+}
+
+/* QR */
+.qr img{
+  width:120px;
+  border-radius:10px;
+  box-shadow:0 0 15px rgba(255,215,0,0.6);
+}
+
+/* WA */
+.wa{
+  display:block;
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+  background:#25D366;
+  color:white;
+  transition:0.3s;
+}
+
+.wa:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 15px rgba(37,211,102,0.7);
+}
+
+/* MUSIC BUTTON */
+.music-btn{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#ffd700;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,215,0,0.7);
+  animation:spin 4s linear infinite;
+}
+
+@keyframes spin{
+  100%{transform:rotate(360deg);}
+}
+
+.footer{
+  margin-top:12px;
+  font-size:11px;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- sparkle -->
+<div class="sparkle" style="left:10%; animation-delay:0s;"></div>
+<div class="sparkle" style="left:30%; animation-delay:1s;"></div>
+<div class="sparkle" style="left:60%; animation-delay:2s;"></div>
+<div class="sparkle" style="left:80%; animation-delay:1.5s;"></div>
+
+<!-- MUSIC -->
+<audio id="music" autoplay loop>
+  <source src="https://www.image2url.com/r2/default/audio/1776405271383-3a0a21f3-0333-4a15-afa1-46a3867ab4d9.m4a">
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+<div class="container">
+
+<div class="logo">ALL PAYMENT ANGTUNE</div>
+<div class="tagline">All Payment Ready • Fast & Trusted</div>
+
+<div class="card">
+<div class="method">DANA</div>
+<div class="number" id="dana">085600467153</div>
+<button class="copy" onclick="copyText('dana')">Salin</button>
+</div>
+
+<div class="card">
+<div class="method">GOPAY</div>
+<div class="number" id="gopay">085600467153</div>
+<button class="copy" onclick="copyText('gopay')">Salin</button>
+</div>
+
+<div class="card">
+<div class="method">ALL PAYMENT</div>
+<div class="number">085600467153</div>
+</div>
+
+<div class="card">
+<div class="method">QRIS</div>
+<div class="qr">
+<img src="https://cdn.phototourl.com/free/2026-04-17-b4c4b98e-f4f6-494f-95a7-5dde9ed45d3b.jpg">
+</div>
+</div>
+
+<a class="wa" href="https://wa.me/6285600467153" target="_blank">
+Hubungi Admin
+</a>
+
+<div class="footer">© 2026 BRAND MOD</div>
+
+</div>
+
+<script>
+function copyText(id){
+  let text=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text);
+  alert("Nomor disalin");
+}
+
+let music = document.getElementById("music");
+
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+</script>
+
+</body>
+</html>
