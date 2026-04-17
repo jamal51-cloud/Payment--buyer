@@ -20,6 +20,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
+  /* Background tetap, blur dikurangi di container */
   background:url('https://cdn.phototourl.com/free/2026-04-17-5df70949-a7b3-4afd-a294-a1d72fe226eb.jpg') no-repeat center/cover;
   overflow:hidden;
 }
@@ -28,7 +29,8 @@ body{
   position:absolute;
   width:100%;
   height:100%;
-  background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  /* Mengurangi kegelapan overlay agar BG lebih tampak */
+  background:linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
 }
 
 /* sparkle */
@@ -55,7 +57,10 @@ body{
   border-radius:22px;
   z-index:2;
   text-align:center;
-  backdrop-filter:blur(10px);
+  /* Blur dikurangi dari 10px ke 3px agar BG tembus pandang */
+  backdrop-filter:blur(3px);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 /* logo */
@@ -82,19 +87,19 @@ body{
 
 .tagline{
   font-size:12px;
-  color:#ccc;
+  color:#eee;
   margin-bottom:18px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 /* card */
 .card{
-  background:rgba(255,255,255,0.05);
+  background:rgba(0, 0, 0, 0.5);
   border-radius:14px;
   padding:14px;
   margin-bottom:12px;
   border:1px solid rgba(255,215,0,0.3);
   transition:0.3s;
-  backdrop-filter:blur(6px);
 }
 
 .card:hover{
@@ -115,7 +120,7 @@ body{
 }
 
 /* button */
-.copy{
+.copy, .view-qr{
   margin-top:8px;
   padding:6px 12px;
   border:none;
@@ -123,19 +128,38 @@ body{
   background:#ffd700;
   color:black;
   font-size:12px;
+  font-weight: 600;
   cursor:pointer;
 }
 
-.copy:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 10px rgba(255,215,0,0.7);
+/* Modal QR */
+#qrModal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-/* QR */
-.qr img{
-  width:120px;
-  border-radius:10px;
-  box-shadow:0 0 15px rgba(255,215,0,0.6);
+#qrModal img {
+  width: 280px;
+  border-radius: 15px;
+  border: 5px solid #ffd700;
+}
+
+.close-modal {
+  margin-top: 20px;
+  color: white;
+  background: #ff4444;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 /* WA */
@@ -170,17 +194,14 @@ body{
   align-items:center;
   cursor:pointer;
   box-shadow:0 0 15px rgba(255,215,0,0.7);
-  animation:spin 4s linear infinite;
-}
-
-@keyframes spin{
-  100%{transform:rotate(360deg);}
+  z-index: 100;
 }
 
 .footer{
   margin-top:12px;
   font-size:11px;
-  color:#aaa;
+  color:#fff;
+  text-shadow: 1px 1px 2px black;
 }
 </style>
 </head>
@@ -189,13 +210,6 @@ body{
 
 <div class="overlay"></div>
 
-<!-- sparkle -->
-<div class="sparkle" style="left:10%; animation-delay:0s;"></div>
-<div class="sparkle" style="left:30%; animation-delay:1s;"></div>
-<div class="sparkle" style="left:60%; animation-delay:2s;"></div>
-<div class="sparkle" style="left:80%; animation-delay:1.5s;"></div>
-
-<!-- MUSIC -->
 <audio id="music" autoplay loop>
   <source src="https://www.image2url.com/r2/default/audio/1776405271383-3a0a21f3-0333-4a15-afa1-46a3867ab4d9.m4a">
 </audio>
@@ -203,51 +217,52 @@ body{
 <div class="music-btn" onclick="toggleMusic()">🎵</div>
 
 <div class="container">
+  <div class="logo">ALL PAYMENT ANGTUNE</div>
+  <div class="tagline">All Payment Ready • Fast & Trusted</div>
 
-<div class="logo">ALL PAYMENT ANGTUNE</div>
-<div class="tagline">All Payment Ready • Fast & Trusted</div>
+  <div class="card">
+    <div class="method">DANA</div>
+    <div class="number" id="dana">085600467153</div>
+    <button class="copy" onclick="copyText('dana')">Salin Nomor</button>
+  </div>
 
-<div class="card">
-<div class="method">DANA</div>
-<div class="number" id="dana">085600467153</div>
-<button class="copy" onclick="copyText('dana')">Salin</button>
+  <div class="card">
+    <div class="method">GOPAY</div>
+    <div class="number" id="gopay">085600467153</div>
+    <button class="copy" onclick="copyText('gopay')">Salin Nomor</button>
+  </div>
+
+  <div class="card">
+    <div class="method">QRIS PAYMENT</div>
+    <div class="number">Otomatis Terdeteksi</div>
+    <button class="view-qr" onclick="openQR()">Klik Lihat QRIS</button>
+  </div>
+
+  <a class="wa" href="https://wa.me/6285600467153" target="_blank">Hubungi Admin</a>
+  <div class="footer">© 2026 BRAND MOD</div>
 </div>
 
-<div class="card">
-<div class="method">GOPAY</div>
-<div class="number" id="gopay">085600467153</div>
-<button class="copy" onclick="copyText('gopay')">Salin</button>
-</div>
-
-<div class="card">
-<div class="method">ALL PAYMENT</div>
-<div class="number">085600467153</div>
-</div>
-
-<div class="card">
-<div class="method">QRIS</div>
-<div class="qr">
-<img src="https://cdn.phototourl.com/free/2026-04-17-b4c4b98e-f4f6-494f-95a7-5dde9ed45d3b.jpg">
-</div>
-</div>
-
-<a class="wa" href="https://wa.me/6285600467153" target="_blank">
-Hubungi Admin
-</a>
-
-<div class="footer">© 2026 BRAND MOD</div>
-
+<div id="qrModal" onclick="closeQR()">
+  <img src="https://cdn.phototourl.com/free/2026-04-17-b4c4b98e-f4f6-494f-95a7-5dde9ed45d3b.jpg" alt="QRIS ANGTUNE">
+  <div class="close-modal">Tutup</div>
 </div>
 
 <script>
 function copyText(id){
   let text=document.getElementById(id).innerText;
   navigator.clipboard.writeText(text);
-  alert("Nomor disalin");
+  alert("Nomor " + id.toUpperCase() + " berhasil disalin!");
+}
+
+function openQR() {
+  document.getElementById("qrModal").style.display = "flex";
+}
+
+function closeQR() {
+  document.getElementById("qrModal").style.display = "none";
 }
 
 let music = document.getElementById("music");
-
 function toggleMusic(){
   if(music.paused){
     music.play();
@@ -259,3 +274,4 @@ function toggleMusic(){
 
 </body>
 </html>
+
